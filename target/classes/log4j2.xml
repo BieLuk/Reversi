@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <properties>
+        <property name="name">app</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS dd-MM-yyyy} | %-5.5p | %-20.20C:%-5.5L | %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="logs\${name}.log" filePattern="logs\$${date:MM-yyyy}\${name}-%d{dd-MM-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <pattern>%d{HH:mm:ss.SSS dd-MM-yyyy} | %-5.5p | %-20.20C:%-5.5L | %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="info">
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>

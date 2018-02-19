@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<class>
+    <language name = "en">
+        <skin1>Skin 1</skin1>
+        <skin2>Skin 2</skin2>
+        <skin3>Skin 3</skin3>
+        <play>PLAY</play>
+        <score>SCORES</score>
+        <exit>EXIT</exit>
+        <pl>Player</pl>
+        <pl1>Player 1</pl1>
+        <pl2>Player 2</pl2>
+        <plName>Player Name</plName>
+        <plScore>Score</plScore>
+        <backToMenu>Go back to menu</backToMenu>
+        <winTitle>End of the game!</winTitle>
+        <winText>has won!</winText>
+
+    </language>
+    <language name = "pl">
+        <skin1>Skórka 1</skin1>
+        <skin2>Skórka 2</skin2>
+        <skin3>Skórka 3</skin3>
+        <play>GRAJ</play>
+        <score>WYNIKI</score>
+        <exit>ZAKOŃCZ</exit>
+        <pl>Gracz</pl>
+        <pl1>Gracz 1</pl1>
+        <pl2>Gracz 2</pl2>
+        <plName>Nazwa Gracza</plName>
+        <plScore>Wynik</plScore>
+        <backToMenu>Wróć do menu</backToMenu>
+        <winTitle>Koniec gry!</winTitle>
+        <winText>wygrał!</winText>
+    </language>
+</class>

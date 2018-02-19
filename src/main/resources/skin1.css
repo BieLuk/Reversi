@@ -1,0 +1,26 @@
+.root{
+    -fx-background-color: #383838;
+    -fx-font-family: fantasy;
+    -fx-font-size: 10pt;
+}
+.button {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 30% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 1,0,0,1;
+    -fx-background-insets: 0,1,2,0;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+}
+
+.text-field{
+    -fx-background-color: #1f2429;
+    -fx-text-fill: #c3c4c4;
+    -fx-prompt-text-fill: #38424b;
+}
+
+.label{
+    -fx-text-fill: #5a646d;
+}
