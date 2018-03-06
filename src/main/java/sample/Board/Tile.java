@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static sample.App.GUI.TILE_SIZE;
 import static sample.App.GUI.board;
+import static sample.App.GUI.emptyTileList;
 
 
 public class Tile extends Rectangle {
@@ -27,7 +28,7 @@ public class Tile extends Rectangle {
     private Move move = new Move();
     private static PieceType player = PieceType.BLACK;
     static ArrayList<Piece> changePieceList = new ArrayList<>();
-    public static int pieceCounter = 4;;
+    public static int pieceCounter = 4;
 
     public boolean hasPiece() {
         return piece != null;
@@ -52,7 +53,6 @@ public class Tile extends Rectangle {
         setStroke(Color.BLACK);
         setFill(Color.GREEN);
 
-
         setOnMouseClicked( e -> {
             if(!hasPiece()) {
                 try {
@@ -60,7 +60,6 @@ public class Tile extends Rectangle {
                 } catch (WrongPieceTypeException exc) {
                     GUI.logger.error("Exception in Tile constructor", exc);
                 }
-
                 try {
                     if((move.checkLeftX(piece, x, y) != 0) |
                             (move.checkLeftX(piece, x, y) != 0) |
@@ -90,10 +89,94 @@ public class Tile extends Rectangle {
             } catch (IOException | SAXException | WrongArgumentException | ParserConfigurationException exc) {
                 GUI.logger.error("Exception in endGame method.", exc);
             }
-
+            canMove();
         });
     }
 
+    private void canMove(){
+        int tilesWithNoMoves = 0;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if (!board[i][j].hasPiece()) {
+                    if (i <= 1) {
+                        if (j <= 1) {
+                            if ((board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                    (board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                    (board[i + 1][j + 1].hasPiece() && board[i + 1][j + 1].getPiece().getType() != player && board[i + 2][j + 2].hasPiece() && board[i + 2][j + 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                        if (j >= 6) {
+                            if ((board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                    (board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                    (board[i + 1][j - 1].hasPiece() && board[i + 1][j - 1].getPiece().getType() != player && board[i + 2][j - 2].hasPiece() && board[i + 2][j - 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                        if(j >= 2 && j <= 5) {
+                            if ((board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                    (board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                    (board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                    (board[i + 1][j - 1].hasPiece() && board[i + 1][j - 1].getPiece().getType() != player && board[i + 2][j - 2].hasPiece() && board[i + 2][j - 2].getPiece().getType() == player) |
+                                    (board[i + 1][j + 1].hasPiece() && board[i + 1][j + 1].getPiece().getType() != player && board[i + 2][j + 2].hasPiece() && board[i + 2][j + 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                    }
+                    if (i >= 6) {
+                        if (j <= 1) {
+                            if ((board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                    (board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                    (board[i - 1][j + 1].hasPiece() && board[i - 1][j + 1].getPiece().getType() != player && board[i - 2][j + 2].hasPiece() && board[i - 2][j + 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                        if (j >= 6) {
+                            if ((board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                    (board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                    (board[i - 1][j - 1].hasPiece() && board[i - 1][j - 1].getPiece().getType() != player && board[i - 2][j - 2].hasPiece() && board[i - 2][j - 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                        if(j >= 2 && j <= 5) {
+                            if ((board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                    (board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                    (board[i - 1][j - 1].hasPiece() && board[i - 1][j - 1].getPiece().getType() != player && board[i - 2][j - 2].hasPiece() && board[i - 2][j - 2].getPiece().getType() == player) |
+                                    (board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                    (board[i - 1][j + 1].hasPiece() && board[i - 1][j + 1].getPiece().getType() != player && board[i - 2][j + 2].hasPiece() && board[i - 2][j + 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                    }
+                    if (i >= 2 && i <= 5) {
+                        if (j <= 1) {
+                            if ((board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                    (board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                    (board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                    (board[i - 1][j + 1].hasPiece() && board[i - 1][j + 1].getPiece().getType() != player && board[i - 2][j + 2].hasPiece() && board[i - 2][j + 2].getPiece().getType() == player) |
+                                    (board[i + 1][j + 1].hasPiece() && board[i + 1][j + 1].getPiece().getType() != player && board[i + 2][j + 2].hasPiece() && board[i + 2][j + 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                        if (j >= 6) {
+                            if ((board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                    (board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                    (board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                    (board[i - 1][j - 1].hasPiece() && board[i - 1][j - 1].getPiece().getType() != player && board[i - 2][j - 2].hasPiece() && board[i - 2][j - 2].getPiece().getType() == player) |
+                                    (board[i + 1][j - 1].hasPiece() && board[i + 1][j - 1].getPiece().getType() != player && board[i + 2][j - 2].hasPiece() && board[i + 2][j - 2].getPiece().getType() == player)) {
+                            } else tilesWithNoMoves++;
+                        }
+                    }
+                    if(i >= 2 && i <= 5 && j >= 2 && j <=5) {
+                        if ((board[i - 1][j].hasPiece() && board[i - 1][j].getPiece().getType() != player && board[i - 2][j].hasPiece() && board[i - 2][j].getPiece().getType() == player) |
+                                (board[i + 1][j].hasPiece() && board[i + 1][j].getPiece().getType() != player && board[i + 2][j].hasPiece() && board[i + 2][j].getPiece().getType() == player) |
+                                (board[i][j - 1].hasPiece() && board[i][j - 1].getPiece().getType() != player && board[i][j - 2].hasPiece() && board[i][j - 2].getPiece().getType() == player) |
+                                (board[i][j + 1].hasPiece() && board[i][j + 1].getPiece().getType() != player && board[i][j + 2].hasPiece() && board[i][j + 2].getPiece().getType() == player) |
+                                (board[i - 1][j - 1].hasPiece() && board[i - 1][j - 1].getPiece().getType() != player && board[i - 2][j - 2].hasPiece() && board[i - 2][j - 2].getPiece().getType() == player) |
+                                (board[i - 1][j + 1].hasPiece() && board[i - 1][j + 1].getPiece().getType() != player && board[i - 2][j + 2].hasPiece() && board[i - 2][j + 2].getPiece().getType() == player) |
+                                (board[i + 1][j - 1].hasPiece() && board[i + 1][j - 1].getPiece().getType() != player && board[i + 2][j - 2].hasPiece() && board[i + 2][j - 2].getPiece().getType() == player) |
+                                (board[i + 1][j + 1].hasPiece() && board[i + 1][j + 1].getPiece().getType() != player && board[i + 2][j + 2].hasPiece() && board[i + 2][j + 2].getPiece().getType() == player)) { }
+                        else tilesWithNoMoves++;
+                    }
+                }
+            }
+        }
+        if(emptyTileList.size() == tilesWithNoMoves)
+            player = changePlayer(player);
+    }
 
 
     private PieceType changePlayer(PieceType player){

@@ -61,12 +61,16 @@ public class GUI {
     private static String player2Name;
 
     private Database db = new Database();
-    public static ObservableList<DataModel> data = FXCollections.observableArrayList();
+    private static ObservableList<DataModel> data = FXCollections.observableArrayList();
     private EventHandler<ActionEvent> playButtonHandler = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
-            player1Name = player1Field.getText();
-            player2Name = player2Field.getText();
+            if(!player1Field.getText().equals(""))
+                player1Name = player1Field.getText();
+            else player1Name = "John Doe";
+            if(!player2Field.getText().equals(""))
+                player2Name = player2Field.getText();
+            else player2Name = "Jane Doe";
             window.setScene(gameScene);
             logger.info("Changing scene to gameScene. Starting game.");
         }
@@ -76,7 +80,6 @@ public class GUI {
         Pane root = new Pane();
         root.setPrefSize(WIDTH*TILE_SIZE, HEIGHT*TILE_SIZE);
         root.getChildren().addAll(tileGroup, pieceGroup);
-
 
         for(int y = 0; y < HEIGHT; y++){
             for(int x = 0; x < WIDTH; x++){
@@ -109,7 +112,6 @@ public class GUI {
                 }
             }
         }
-
         return root;
     }
 

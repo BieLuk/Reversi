@@ -15,10 +15,10 @@ public class Database {
             ResultSet rs = st.executeQuery("SELECT \"Player\", \"Score\"\n" +
                     "FROM public.\"Score\"\n" +
                     "ORDER BY \"Score\" DESC;");
-            Task task = new Task<Void>(){
+            Task task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
-                    while (rs.next()){
+                    while (rs.next()) {
                         DataModel.nameList.add(rs.getString(1));
                         DataModel.scoreList.add(rs.getInt(2));
                     }
@@ -30,8 +30,9 @@ public class Database {
 
             rs.close();
             st.close();
-        }catch (Exception e){
-            e.printStackTrace();
+
+        } catch (SQLException e) {
+            GUI.logger.error("SQLException while getting data from Database", e);
         }
     }
 
